@@ -29,15 +29,15 @@ export class DesarrolladorService {
   async insertar(crearDesarrolladorDto: CrearDesarrolladorDto): Promise<DesarrolladorEntity> {
     const tecnologiasConocidas = await this.tecnologiaService
       .seleccionarTodosPorIds(crearDesarrolladorDto.idsTecnologiasConocidas);
-    const { nombresCompletos, linkGitHub } = { ...crearDesarrolladorDto };
-    const developerEntity: DesarrolladorEntity = {
-      nombresCompletos,
-      linkGitHub,
-      tecnologiasConocidas,
-    };
-    await this.desarrolladorRepository.save(developerEntity);
-    if (developerEntity.id) {
-      return developerEntity;
+
+    const desarrolladorEntity = new DesarrolladorEntity();
+    desarrolladorEntity.nombresCompletos = crearDesarrolladorDto.nombresCompletos;
+    desarrolladorEntity.linkGitHub = crearDesarrolladorDto.linkGitHub;
+    desarrolladorEntity.tecnologiasConocidas = tecnologiasConocidas;
+
+    await this.desarrolladorRepository.save(desarrolladorEntity);
+    if (desarrolladorEntity.id) {
+      return desarrolladorEntity;
     }
     throw new ServiceUnavailableException('No se pudo crear el desarrollador, intente más tarde.');
   }
@@ -53,20 +53,6 @@ export class DesarrolladorService {
       return desarrolladoresEntities;
     }
     throw new ServiceUnavailableException('No se pudo obtener los desarrolladores, intente más tarde.');
-  }
-
-  /**
-   * Consulta el desarrollador con el identificador especificado.
-   * @param id identificador único del desarrollador.
-   * @return Promise<DesarrolladorEntity>
-   * @throws NotFoundException si no se encuentra registrado el desarrollador.
-   */
-  async seleccionarPorId(id: number): Promise<DesarrolladorEntity> {
-    const desarrolladorEntity = await this.desarrolladorRepository.findOne({ id });
-    if (desarrolladorEntity) {
-      return desarrolladorEntity;
-    }
-    throw new NotFoundException(`No se encontró el desarrollador con el identificador ${id}.`);
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm/index';
+import { Repository } from 'typeorm/index';
 import { TecnologiaEntity } from './tecnologia.entity';
 
 /**
@@ -36,9 +36,7 @@ export class TecnologiaService {
    * @throws ServiceUnavailableException si no hay conexión a la base de datos.
    */
   async seleccionarTodosPorIds(ids: number[]): Promise<TecnologiaEntity[]> {
-    const tecnologiasEntities = await this.tecnologiaEntityRepository.find({
-      id: In(ids),
-    });
+    const tecnologiasEntities = await this.tecnologiaEntityRepository.findByIds(ids);
     if (tecnologiasEntities && tecnologiasEntities.length >= 0) {
       return tecnologiasEntities;
     }
