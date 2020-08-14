@@ -37,6 +37,17 @@ export class DesarrolladorController {
   }
 
   /**
+   * Define la ruta con el método GET para consultar un desarrollador por su identificador
+   * y si no hay excepciones devuelve el resultado con un código de estado exitoso APROBADO.
+   * @return Promise<DesarrolladorEntity>
+   */
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  getSeleccionarPorId(@Param('id') id: number): Promise<DesarrolladorEntity> {
+    return this.desarrolladorService.seleccionarPorId(id);
+  }
+
+  /**
    * Define la ruta con el método PUT para actualizar un desarrollador por su identificador Y
    * si no hay excepciones devuelve el resultado con un código de estado existoso APROBADO.
    * @param id

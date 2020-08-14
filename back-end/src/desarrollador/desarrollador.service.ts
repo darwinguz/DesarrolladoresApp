@@ -56,6 +56,20 @@ export class DesarrolladorService {
   }
 
   /**
+   * Consulta el desarrollador con el identificador especificado.
+   * @param id identificador único del desarrollador.
+   * @return Promise<DesarrolladorEntity>
+   * @throws NotFoundException si no se encuentra registrado el desarrollador.
+   */
+  async seleccionarPorId(id: number): Promise<DesarrolladorEntity> {
+    const desarrolladorEntity = await this.desarrolladorRepository.findOne({ id });
+    if (desarrolladorEntity) {
+      return desarrolladorEntity;
+    }
+    throw new NotFoundException(`No se encontró el desarrollador con el identificador ${id}.`);
+  }
+
+  /**
    * Actualiza los datos de un desarrollador por su identificador.
    * @param id identificador único del desarrollador.
    * @param actualizarDesarrolladorDto objeto de transferencia de datos para actualizar un desarrollador.

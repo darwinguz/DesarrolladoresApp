@@ -1,0 +1,45 @@
+<div>
+  <p-card header="Desarrolladores">
+    <p-table [columns]="columnas" [value]="desarrolladoresDtos" [paginator]="true"
+             styleClass="p-datatable-responsive-demo" rows="10">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">{{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+          <th style="text-align: center; width:7em">Opciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr [pSelectableRow]="rowData">
+          <td>
+            <span class="p-column-title">Nombres</span>
+            {{rowData.nombresCompletos}}</td>
+          <td>
+            <span class="p-column-title">GitHub</span>
+            <a [href]="rowData.linkGitHub" [title]="rowData.linkGitHub"
+               target="_blank">{{rowData.linkGitHub | urlToken}}</a></td>
+          <td>
+            <span class="p-column-title">Tecnologías</span>
+            <span *ngFor="let tecnologiaDto of rowData.tecnologiasConocidas"
+                  class="p-tag p-tag-rounded p-tag-success p-mr-1">{{tecnologiaDto.nombre}}</span>
+          </td>
+          <td>
+            <button pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text p-button-primary" pTooltip="Editar"
+                    (click)="onClickEditar(rowData)"></button>
+            <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar"
+                    (click)="onClickEliminar(rowData)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div style="text-align:left">
+          <button type="button" pButton icon="pi pi-plus" (click)="onClickNuevo()" label="Nuevo"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+

@@ -1,0 +1,45 @@
+<div>
+  <p-card header="Nuevo Desarrollador">
+    <form [formGroup]="crearDesarrolladorFormGroup" (ngSubmit)="onClickGuardar(crearDesarrolladorFormGroup.value)">
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <label for="nombresCompletos" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nombres<span style="color: #ff0000">&nbsp;*</span></label>
+          <div class="p-col-12 p-md-10">
+            <input id="nombresCompletos" formControlName="nombresCompletos" type="text" pInputText autofocus>
+            <p-message severity="error" text="Campo obligatorio."
+                       *ngIf="!crearDesarrolladorFormGroup.controls['nombresCompletos'].valid
+                       && crearDesarrolladorFormGroup.controls['nombresCompletos'].dirty">
+            </p-message>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label for="linkGitHub" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">GitHub<span style="color: #ff0000">&nbsp;*</span></label>
+          <div class="p-col-12 p-md-10">
+            <input id="linkGitHub" type="text" formControlName="linkGitHub" pInputText>
+            <p-message severity="error" text="Campo obligatorio."
+                       *ngIf="!crearDesarrolladorFormGroup.controls['linkGitHub'].valid
+                       && crearDesarrolladorFormGroup.controls['linkGitHub'].dirty">
+            </p-message>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label for="tecnologias" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Tecnologías Conocidas</label>
+          <div class="p-col-12 p-md-10">
+            <div id="tecnologias">
+              <p-listbox [options]="tecnologiasDtos" [metaKeySelection]="false"
+                         [checkbox]="true" [filter]="true" [multiple]="true" optionLabel="nombre"
+                         formControlName="tecnologias">
+              </p-listbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button pButton type="submit" label="Guardar"></button>
+      </div>
+    </form>
+    <p-footer>
+      <span style="font-size: small; color: #ff0000">&nbsp;* Campos obligatorios</span>
+    </p-footer>
+  </p-card>
+</div>
