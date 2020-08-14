@@ -1,15 +1,16 @@
 {
-  "name": "front-end",
-  "version": "0.0.0",
+  "name": "desarrolladores-app-frontend",
+  "description": "Frontend de la aplicación para gestión de desarrolladores",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.9",
     "@angular/cdk": "^10.1.3",
