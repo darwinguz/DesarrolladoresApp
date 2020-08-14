@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { TecnologiaEntity } from './tecnologia.entity';
 import { ServiceUnavailableException } from '@nestjs/common';
 import { Repository } from 'typeorm/index';
+import { CrearTecnologiaDto } from './dtos/crear-tecnologia.dto';
 
 describe('TecnologiaService', () => {
   let tecnologiaService: TecnologiaService;
@@ -22,6 +23,39 @@ describe('TecnologiaService', () => {
 
     tecnologiaService = module.get<TecnologiaService>(TecnologiaService);
     tecnologiaRepository = module.get<Repository<TecnologiaEntity>>(getRepositoryToken(TecnologiaEntity));
+  });
+
+  describe('insertar', () => {
+    it('debe ser insertado', async () => {
+      const crearTecnologiaDto: CrearTecnologiaDto = {
+        nombre: 'JavaScript',
+      };
+      const id = 1;
+      jest.spyOn(tecnologiaRepository, 'save')
+        .mockImplementation((tecnologiaEntity: TecnologiaEntity): Promise<TecnologiaEntity> => {
+          tecnologiaEntity.id = id;
+          return Promise.resolve(tecnologiaEntity);
+        });
+      const tecnologiaEntity = await tecnologiaService.insertar(crearTecnologiaDto);
+      const tecnologiaEsperadaEntity = new TecnologiaEntity();
+      tecnologiaEsperadaEntity.id = id;
+      tecnologiaEsperadaEntity.nombre = crearTecnologiaDto.nombre;
+
+      expect(tecnologiaEntity).toBeInstanceOf(TecnologiaEntity);
+      expect(tecnologiaEntity).toEqual(tecnologiaEsperadaEntity);
+      expect(tecnologiaEntity).toHaveProperty('id', id);
+    });
+
+    it('debe lanzar una excepción de sin servicio', async () => {
+      const crearTecnologiaDto: CrearTecnologiaDto = {
+        nombre: 'JavaScript',
+      };
+      jest.spyOn(tecnologiaRepository, 'save')
+        .mockImplementation((): Promise<TecnologiaEntity> => {
+          return Promise.resolve(undefined);
+        });
+      await expect(tecnologiaService.insertar(crearTecnologiaDto)).rejects.toThrow(ServiceUnavailableException);
+    });
   });
 
   describe('seleccionarTodos', () => {

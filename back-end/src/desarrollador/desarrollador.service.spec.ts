@@ -51,18 +51,18 @@ describe('DesarrolladorService', () => {
           return Promise.resolve(desarrolladorEntity);
         });
       const desarrolladorEntity = await desarrolladorService.insertar(crearDesarrolladorDto);
-      const desarrolladorEsperadoEntity: DesarrolladorEntity = new DesarrolladorEntity();
+      const desarrolladorEsperadoEntity = new DesarrolladorEntity();
       desarrolladorEsperadoEntity.id = 1;
       desarrolladorEsperadoEntity.nombresCompletos = crearDesarrolladorDto.nombresCompletos;
       desarrolladorEsperadoEntity.linkGitHub = crearDesarrolladorDto.linkGitHub;
       desarrolladorEsperadoEntity.tecnologiasConocidas = tecnologiaEntities;
 
       expect(desarrolladorEntity).toBeInstanceOf(DesarrolladorEntity);
-      expect(desarrolladorEntity).toMatchObject(desarrolladorEsperadoEntity);
+      expect(desarrolladorEntity).toEqual(desarrolladorEsperadoEntity);
       expect(desarrolladorEntity).toHaveProperty('id', 1);
     });
 
-    it('debe lanzar una excepción', async () => {
+    it('debe lanzar una excepción de sin servicio', async () => {
       const crearDesarrolladorDto: CrearDesarrolladorDto = {
         nombresCompletos: 'Darwin Guzmán',
         linkGitHub: 'https://github.com/darwinguz',
@@ -76,6 +76,34 @@ describe('DesarrolladorService', () => {
           return Promise.resolve(desarrolladorEntity);
         });
       await expect(desarrolladorService.insertar(crearDesarrolladorDto)).rejects.toThrow(ServiceUnavailableException);
+    });
+  });
+
+  describe('seleccionarPorId', () => {
+    it('debe seleccionar por id ', async () => {
+      const desarrolladorEsperadoEntity = new DesarrolladorEntity();
+      desarrolladorEsperadoEntity.id = 1;
+      desarrolladorEsperadoEntity.nombresCompletos = 'Darwin Guzmán';
+      desarrolladorEsperadoEntity.linkGitHub = 'https://github.com/darwinguz';
+
+      jest.spyOn(desarrolladorRepository, 'findOne')
+        .mockImplementation((): Promise<DesarrolladorEntity> => {
+          return Promise.resolve(desarrolladorEsperadoEntity);
+        });
+
+      const desarrolladorEntity = await desarrolladorService.seleccionarPorId(desarrolladorEsperadoEntity.id);
+      expect(desarrolladorEntity).toBeInstanceOf(DesarrolladorEntity);
+      expect(desarrolladorEntity).toEqual(desarrolladorEsperadoEntity);
+      expect(desarrolladorEntity).toHaveProperty('id', 1);
+    });
+
+    it('debe lanzar una excepción de no encontrado', async () => {
+      jest.spyOn(desarrolladorRepository, 'findOne')
+        .mockImplementation((): Promise<DesarrolladorEntity> => {
+          return Promise.resolve(undefined);
+        });
+
+      await expect(desarrolladorService.seleccionarPorId(1)).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -140,7 +168,7 @@ describe('DesarrolladorService', () => {
           return Promise.resolve(desarrolladorActualizadoEntity);
         });
 
-      const desarrolladorEsperadoEntity: DesarrolladorEntity = new DesarrolladorEntity();
+      const desarrolladorEsperadoEntity = new DesarrolladorEntity();
       desarrolladorEsperadoEntity.id = idDesarrollador;
       desarrolladorEsperadoEntity.nombresCompletos = actualizarDesarrolladorDto.nombresCompletos;
       desarrolladorEsperadoEntity.linkGitHub = actualizarDesarrolladorDto.linkGitHub;
@@ -148,7 +176,7 @@ describe('DesarrolladorService', () => {
 
       const desarrolladorActualizadoEntity = await desarrolladorService.actualizar(idDesarrollador, actualizarDesarrolladorDto);
       expect(desarrolladorActualizadoEntity).toBeInstanceOf(DesarrolladorEntity);
-      expect(desarrolladorActualizadoEntity).toMatchObject(desarrolladorEsperadoEntity);
+      expect(desarrolladorActualizadoEntity).toEqual(desarrolladorEsperadoEntity);
     });
 
     it('debe lanzar una exepción de no encontrado', async () => {
@@ -191,7 +219,7 @@ describe('DesarrolladorService', () => {
     it('debe retornar true', async () => {
       jest.spyOn(desarrolladorRepository, 'findOne')
         .mockImplementation((): Promise<DesarrolladorEntity> => {
-          const desarrolladorEntity: DesarrolladorEntity = new DesarrolladorEntity();
+          const desarrolladorEntity = new DesarrolladorEntity();
           desarrolladorEntity.id = 1;
           desarrolladorEntity.nombresCompletos = 'Darwin Guzmán';
           desarrolladorEntity.linkGitHub = 'https://github.com/darwinguz';

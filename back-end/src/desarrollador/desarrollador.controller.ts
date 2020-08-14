@@ -44,7 +44,7 @@ export class DesarrolladorController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   getSeleccionarPorId(@Param('id') id: number): Promise<DesarrolladorEntity> {
-    return this.desarrolladorService.seleccionarPorId(id);
+    return this.desarrolladorService.seleccionarPorId(+id);
   }
 
   /**
@@ -59,7 +59,7 @@ export class DesarrolladorController {
   putActualizar(
     @Param('id') id: number, @Body() actualizarDesarrolladorDto: ActualizarDesarrolladorDto,
   ): Promise<DesarrolladorEntity> {
-    return this.desarrolladorService.actualizar(id, actualizarDesarrolladorDto);
+    return this.desarrolladorService.actualizar(+id, actualizarDesarrolladorDto);
   }
 
   /**
@@ -71,6 +71,6 @@ export class DesarrolladorController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   deleteEliminar(@Param('id') id: number): Promise<void> {
-    return this.desarrolladorService.eliminar(id);
+    return this.desarrolladorService.eliminar(+id);
   }
 }
