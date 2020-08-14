@@ -1,10 +1,17 @@
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsUrl, MaxLength } from 'class-validator';
 
 export class ActualizarDesarrolladorDto {
-  @IsString()
+  @MaxLength(150, {
+    message: 'Los nombres deben tener máximo 150 caracteres.',
+  })
   readonly nombresCompletos: string;
 
-  @IsString()
+  @IsUrl({
+    require_protocol: true,
+    require_valid_protocol: true,
+  }, {
+    message: 'Ingrese un enlace válido de GitHub, por ejemplo: "https://github.com/darwinguz".',
+  })
   readonly linkGitHub: string;
 
   @IsArray()

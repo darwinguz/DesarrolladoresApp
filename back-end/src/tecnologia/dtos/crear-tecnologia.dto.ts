@@ -1,6 +1,7 @@
-import { IsString } from 'class-validator';
+import { MaxLength } from 'class-validator';
 
 export class CrearTecnologiaDto {
-  @IsString()
-  readonly nombre: string;
+  @MaxLength(50, {
+    message: 'El nombre debe tener máximo 50 caracteres.',
+  }) readonly nombre: string;
 }
