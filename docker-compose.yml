@@ -1,0 +1,12 @@
+version: '1'
+services:
+  nodejs-server:
+    build:
+      context: .
+    ports:
+      - "3080:3080"
+    environment:
+      - NODE_ENV=development
+    container_name: dev-app
+    volumes:
+       - ./src:/usr/src/app/src
