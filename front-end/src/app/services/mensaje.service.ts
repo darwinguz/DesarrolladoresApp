@@ -1,6 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ConfirmationService, Message, MessageService} from 'primeng/api';
 
+/**
+ * Proveedor inyectable para mostrar mensajes.
+ * @author Darwin Guzmán
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -23,48 +27,47 @@ export class MensajeService {
   ) {
   }
 
-  // FIXME QUITAR ESTA LÍNEA this.messages = []; DE TODOS LOS TOAST CUANDO EL BUG DE PRIMENG SE HAYA ARREGLADO
-  mostrarToastInformacion(mensaje: string) {
+  mostrarToastInformacion(mensaje: string): void {
     this.messages = [];
     this.messageService.add({severity: this.SEVERITY_INFO, summary: this.SUMMARY_INFO, detail: mensaje});
   }
 
-  mostrarToastAdvertencia(mensaje: string) {
+  mostrarToastAdvertencia(mensaje: string): void {
     this.messages = [];
     this.messageService.add({severity: this.SEVERITY_WARN, summary: this.SUMMARY_WARN, detail: mensaje});
   }
 
-  mostrarToastError(mensaje: string) {
+  mostrarToastError(mensaje: string): void {
     this.messages = [];
     this.messageService.add({severity: this.SEVERITY_ERROR, summary: this.SUMMARY_ERROR, detail: mensaje});
   }
 
-  mostrarToastExito(mensaje: string) {
+  mostrarToastExito(mensaje: string): void {
     this.messages = [];
     this.messageService.add({severity: this.SEVERITY_SUCCESS, summary: this.SUMMARY_SUCCESS, detail: mensaje});
   }
 
-  mostrarMenssageInformacion(mensaje: string) {
+  mostrarMenssageInformacion(mensaje: string): void {
     this.messages = [];
     this.messages.push({severity: this.SEVERITY_INFO, summary: this.SUMMARY_INFO, detail: mensaje});
   }
 
-  mostrarMessageAdvertencia(mensaje: string) {
+  mostrarMessageAdvertencia(mensaje: string): void {
     this.messages = [];
     this.messages.push({severity: this.SEVERITY_WARN, summary: this.SUMMARY_WARN, detail: mensaje});
   }
 
-  mostrarMessageError(mensaje: string) {
+  mostrarMessageError(mensaje: string): void {
     this.messages = [];
     this.messages.push({severity: this.SEVERITY_ERROR, summary: this.SUMMARY_ERROR, detail: mensaje});
   }
 
-  mostrarMessageExito(mensaje: string) {
+  mostrarMessageExito(mensaje: string): void {
     this.messages = [];
     this.messages.push({severity: this.SEVERITY_SUCCESS, summary: this.SUMMARY_SUCCESS, detail: mensaje});
   }
 
-  mostrarMensajeConfirmacion(mensaje: string, aceptarCallback, rechazarCallback?) {
+  mostrarMensajeConfirmacion(mensaje: string, aceptarCallback, rechazarCallback?): void {
     this.confirmationService.confirm({
       message: mensaje,
       header: 'Mensaje de Confirmación',

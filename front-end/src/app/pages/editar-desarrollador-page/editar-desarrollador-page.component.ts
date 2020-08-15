@@ -8,6 +8,10 @@ import {ActualizarDesarrolladorDto, DesarrolladorDto} from '../../dtos/desarroll
 import {map, switchMap} from 'rxjs/operators';
 import {MensajeService} from '../../services/mensaje.service';
 
+/**
+ * Componente para editar desarrolladores.
+ * @author Darwin Guzmán
+ */
 @Component({
   selector: 'app-editar-desarrollador-page',
   templateUrl: './editar-desarrollador-page.component.html',
@@ -61,6 +65,7 @@ export class EditarDesarrolladorPageComponent implements OnInit {
       };
       this.desarrolladorService.postInsertar(actualizarDesarrolladorDto).subscribe(
         () => {
+          this.mensajeService.mostrarToastExito(`Desarrollador ${actualizarDesarrolladorDto.nombresCompletos} actualizado.`);
           this.router.navigateByUrl('/').then();
         },
         error => this.mensajeService.mostrarMessageError(error.error.message)

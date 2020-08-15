@@ -10,13 +10,24 @@ export class DesarrolladorEntity {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column()
+  @Column({ name: 'nombres_completos' })
   nombresCompletos: string;
 
-  @Column()
+  @Column({ name: 'link_git_hub' })
   linkGitHub: string;
 
-  @ManyToMany(type => TecnologiaEntity, { cascade: true, eager: true })
+  @ManyToMany(() => TecnologiaEntity, { cascade: true, eager: true })
   @JoinTable()
+  @JoinTable({
+    name: 'desarrollador_tecnologia',
+    joinColumn: {
+      name: 'id_desarrollador',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'id_tecnologia',
+      referencedColumnName: 'id',
+    },
+  })
   tecnologiasConocidas?: TecnologiaEntity[];
 }

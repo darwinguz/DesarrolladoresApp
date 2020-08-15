@@ -7,6 +7,10 @@ import {CrearDesarrolladorDto} from '../../dtos/desarrollador.dto';
 import {Router} from '@angular/router';
 import {MensajeService} from '../../services/mensaje.service';
 
+/**
+ * Componente para crear desarrolladores.
+ * @author Darwin Guzmán
+ */
 @Component({
   selector: 'app-crear-desarrollador-page',
   templateUrl: './crear-desarrollador-page.component.html',
