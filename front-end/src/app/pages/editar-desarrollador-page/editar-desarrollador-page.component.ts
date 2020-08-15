@@ -63,7 +63,7 @@ export class EditarDesarrolladorPageComponent implements OnInit {
         linkGitHub: valuesForm.linkGitHub,
         idsTecnologiasConocidas: valuesForm.tecnologias.map(it => it.id)
       };
-      this.desarrolladorService.postInsertar(actualizarDesarrolladorDto).subscribe(
+      this.desarrolladorService.putActualizar(this.desarrolladorPorActualizarDto.id, actualizarDesarrolladorDto).subscribe(
         () => {
           this.mensajeService.mostrarToastExito(`Desarrollador ${actualizarDesarrolladorDto.nombresCompletos} actualizado.`);
           this.router.navigateByUrl('/').then();
