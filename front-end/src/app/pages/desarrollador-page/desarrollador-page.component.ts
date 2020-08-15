@@ -4,6 +4,10 @@ import {DesarrolladorDto} from '../../dtos/desarrollador.dto';
 import {Router} from '@angular/router';
 import {MensajeService} from '../../services/mensaje.service';
 
+/**
+ * Componente para listar desarrolladores.
+ * @author Darwin Guzmán
+ */
 @Component({
   selector: 'app-desarrollador-page',
   templateUrl: './desarrollador-page.component.html',
@@ -38,7 +42,10 @@ export class DesarrolladorPageComponent implements OnInit {
       `¿Está seguro que desea eliminar al desarrollador ${desarrolladorDto.nombresCompletos}?`,
       () => {
         this.desarrolladorService.deleteEliminar(desarrolladorDto.id).subscribe(
-          () => this.desarrolladoresDtos = this.desarrolladoresDtos.filter(it => it.id !== desarrolladorDto.id),
+          () => {
+            this.desarrolladoresDtos = this.desarrolladoresDtos.filter(it => it.id !== desarrolladorDto.id);
+            this.mensajeService.mostrarToastExito(`Desarrollador ${desarrolladorDto.nombresCompletos} eliminado.`);
+          },
           error => this.mensajeService.mostrarMessageError(error.error.message)
         );
       }
