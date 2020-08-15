@@ -8,7 +8,7 @@ las tecnologias que conocen.
 ![Arquitectura](arquitectura.png)
 
 ### Backend
-- Node.js
+- Node.js v12
 - Lenguaje TypeScript
 - Framework NestJS v7 integrado con Express
 - Base de datos SQLite v3
@@ -99,7 +99,8 @@ $ ng e2e
 $ docker build -t dev-app .
 
 # deploy
-$ docker run -it -p  30000:3000 --name dev-app-container dev-app
+$ docker run -it -p  3000:3000 --name dev-app-container dev-app
+# and navigate to http://localhost:3000/
 ```
 
 
@@ -107,5 +108,5 @@ $ docker run -it -p  30000:3000 --name dev-app-container dev-app
 - Twitter - [@wradguz](https://twitter.com/wradguz)
 - LinkedIn - [darwin-guzman](https://www.linkedin.com/in/darwin-guzman/)
 
-## License
+## Licencia
 MIT licensed

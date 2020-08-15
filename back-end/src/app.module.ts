@@ -12,7 +12,7 @@ import { join } from 'path';
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'sqlite',
-        database: `./${process.env.DATABASE}` || './database.sqlite',
+        database: process.env.DATABASE || 'database.sqlite',
         autoLoadEntities: true,
         synchronize: true,
         dropSchema: false,
